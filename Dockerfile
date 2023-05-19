@@ -1,14 +1,11 @@
-FROM python:3.9
+FROM python:3.9-alpine
 
+WORKDIR /opt
 
-RUN python3 -m venv .venv
-RUN source .venv/bin/activate
+COPY . ./opt/
 
-
-RUN pip install -r ./requirements.txt
+RUN pip install -r ./opt/requirements.txt
 
 EXPOSE 5000
 
-COPY . .
-
-CMD ["flask", "run"]
+ENTRYPOINT FLASK_APP=./opt/app.py flask run --host=0.0.0.0
